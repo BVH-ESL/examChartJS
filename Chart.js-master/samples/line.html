@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Line Chart</title>
+        <script src="../Chart.js"></script>
+    </head>
+    <body>
+        <div style="width:30%">
+            <div>
+                <canvas id="canvas" ></canvas>
+            </div>
+        </div>
+
+
+        <script>
+            var randomScalingFactor = function () {
+                return Math.round(Math.random() * 100)
+            };
+            var lineChartData = {
+                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [
+                    {
+                        label: "My First dataset",
+//					fillColor : "rgba(255, 255, 255, 1)",
+                        strokeColor: "rgba(220,220,220,1)",
+                        pointColor: "rgba(220,220,220,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(220,220,220,1)",
+                        data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+                    }
+//                    {
+//                        label: "My Second dataset",
+//                        fillColor: "rgba(151,187,205,0.2)",
+//                        strokeColor: "rgba(151,187,205,1)",
+//                        pointColor: "rgba(151,187,205,1)",
+//                        pointStrokeColor: "#fff",
+//                        pointHighlightFill: "#fff",
+//                        pointHighlightStroke: "rgba(151,187,205,1)",
+//                        data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+//                    }
+                ]
+
+            }
+
+            window.onload = function () {
+                var ctx = document.getElementById("canvas").getContext("2d");
+                window.myLine = new Chart(ctx).Line(lineChartData, {
+                    responsive: true,
+                    animation: false,
+                    bezierCurve: false
+                });
+            }
+            setInterval(function(){ 
+                var j = 1;
+                for(var i = 0; i < myLine.datasets[0].points.length-1; i++){
+//                    console.log(j);
+                    myLine.datasets[0].points[i].value = myLine.datasets[0].points[j].value;;
+                    myLine.update();
+                    j++;
+                }
+                myLine.datasets[0].points[myLine.datasets[0].points.length-1].value = randomScalingFactor();
+                myLine.update();
+            }, 1000);
+            
+            canvas.onclick = function (evt) {
+                var activePoints = myLine.getPointsAtEvent(evt);
+                // => activePoints is an array of points on the canvas that are at the same position as the click event.
+                console.log(myLine.datasets[0].points.length);
+                myLine.datasets[0].points[2].value = randomScalingFactor();
+// Would update the first dataset's value of 'March' to be 50
+                myLine.update();
+            };
+
+        </script>
+    </body>
+</html>
