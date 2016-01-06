@@ -3,14 +3,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>Highcharts Example</title>
-
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="jquery-1.8.3.min.js" type="text/javascript"></script>
+        <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>-->
         <style type="text/css">
             /*${demo.css}*/
         </style>
         <script type="text/javascript">
             $(function () {
                 $('#container').highcharts({
+                    chart: {
+                        animation: false
+                    },
                     title: {
                         text: 'Monthly Average Temperature',
                         x: -20 //center
@@ -56,13 +59,17 @@
                             data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
                         }]
                 });
+                setInterval(function () {
+                    var chart = $('#container').highcharts();
+                    chart.series[2].addPoint(50, true, false);
+                }, 1000);
             });
         </script>
     </head>
     <body>
-        <script src="https://code.highcharts.com/highcharts.js"></script>
-        <script src="https://code.highcharts.com/modules/exporting.js"></script>
-
+<!--        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>-->
+        <script src="Highcharts-4.2.1/js/highcharts.js" type="text/javascript"></script>
         <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
     </body>
